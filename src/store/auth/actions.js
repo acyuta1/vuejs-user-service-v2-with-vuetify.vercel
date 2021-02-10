@@ -84,7 +84,7 @@ export default {
   },
 
   async resetPasswordRequest(context, payload) {
-    AuthenticationService.resetPasswordRequest(payload)
+    await AuthenticationService.resetPasswordRequest(payload)
       .catch((err) => {
         console.log(err);
         throw err;

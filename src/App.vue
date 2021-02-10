@@ -19,9 +19,5 @@ export default {
   components: {
     Header,
   },
-  created() {
-    console.log('hey');
-    this.$store.dispatch('autoLogin');
-  },
 };
 </script>
