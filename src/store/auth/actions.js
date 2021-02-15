@@ -10,7 +10,6 @@ export default {
   async login(context, payload) {
     const response = await AuthenticationService.login(payload.username, payload.password)
       .catch((err) => {
-        console.log(err);
         throw err;
       });
     if (response.data) {

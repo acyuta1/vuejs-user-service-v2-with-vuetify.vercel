@@ -3,11 +3,8 @@
     <v-form v-model="valid" @submit.prevent="subgmitSignup">
       <v-row align="center" justify="center">
         <v-col cols="12" md="2">
-          <div v-if="error.length > 0">
-            Atlease one of Username or email is required.
-            <li v-for="(error, index) in error" :key="index">
-              {{ error }}
-            </li>
+          <div v-if="error">
+            {{ error }}
           </div>
           <v-text-field
             v-model="firstName"
@@ -141,7 +138,7 @@ export default {
         (v) =>
           v.length <= 6 || 'Confirm password must be greater than 6 characters',
       ],
-      error: [],
+      error: '',
     };
   },
 
@@ -161,9 +158,8 @@ export default {
         });
         this.$router.replace('/login');
       } catch (err) {
-        this.error.push(
-          err.response.data.message || 'Failed to create new account'
-        );
+        this.error =
+          err.response.data.message || 'Failed to create new account';
       }
     },
   },

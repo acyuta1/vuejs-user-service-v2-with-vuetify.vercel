@@ -106,7 +106,9 @@ export default {
   },
   computed: {
     loginOrForgotPassword() {
-      return !this.requestPassword ? 'Forgot Password?' : 'Login';
+      return !this.requestPassword
+        ? 'Forgot Password?'
+        : 'Have an Account? Login instead.';
     },
   },
 };

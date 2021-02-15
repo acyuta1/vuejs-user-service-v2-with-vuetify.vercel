@@ -1,5 +1,8 @@
 <template>
-  <p v-if="signupCorrectToken">Authenticated Successfully!</p>
+  <p v-if="signupCorrectToken">
+    Authenticated Successfully! Redirecting you to Login page.
+    <router-link to="/login"> here if not redirected. </router-link>
+  </p>
   <p v-else-if="signupInorrectToken || error || forgotPasswordIncorrectToken">
     Incorrect Token Provided {{ error }}
   </p>
@@ -66,5 +69,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

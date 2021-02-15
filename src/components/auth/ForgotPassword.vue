@@ -4,9 +4,7 @@
       <v-row align="center" justify="center">
         <v-col cols="12" md="2">
           <p v-if="error">{{ error }}</p>
-          <p v-if="!isFormValid">
-            Atlease one of Username or email is required.
-          </p>
+          <p v-if="!isFormValid">Invalid credentials passed!</p>
           <v-text-field
             v-model="username"
             :counter="36"

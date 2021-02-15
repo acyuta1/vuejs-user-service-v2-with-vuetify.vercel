@@ -28,7 +28,7 @@
         <v-text-field
           type="password"
           v-model="confirmPassword"
-          :rules="[password === confirmPassword || 'Password must match']"
+          :rules="[passwordMatchCheck]"
           :counter="36"
           label="Confirm Password"
           required
@@ -79,6 +79,12 @@ export default {
           this.error =
             err.response.data.message || 'Failed to Authenticate token';
         });
+    },
+  },
+
+  computed: {
+    passwordMatchCheck() {
+      return this.password === this.confirmPassword || 'Password must match';
     },
   },
 };
