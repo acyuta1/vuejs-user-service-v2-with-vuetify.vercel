@@ -73,12 +73,12 @@ export default {
     requestPassword: false,
     usernameRules: [
       (v) => !!v || 'Username is required',
-      (v) => v.length <= 6 || 'Username must be less than 6 characters',
+      (v) => v.length >= 5 || 'Username must be greater than 5 characters',
     ],
 
     passwordRules: [
       (v) => !!v || 'Password is required',
-      (v) => v.length >= 6 || 'Password must be less than 6 characters',
+      (v) => v.length >= 5 || 'Password must be greater than 5 characters',
     ],
   }),
 
@@ -94,7 +94,6 @@ export default {
           password: this.password,
         });
         this.$router.replace('/');
-        console.log(this.$store.getters.getUsername);
       } catch (err) {
         this.error = err.response.data.message || 'Failed to Authenticate';
       }

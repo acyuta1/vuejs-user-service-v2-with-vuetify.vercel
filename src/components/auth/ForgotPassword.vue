@@ -31,6 +31,17 @@
           </v-col>
         </v-row>
       </v-card-actions>
+      <v-overlay v-if="loadingScreen">
+        <v-layout justify-center align-center>
+          <v-flex justify-center xs10 class="mx-auto">
+            <v-progress-circular
+              :size="50"
+              color="primary"
+              indeterminate
+            ></v-progress-circular>
+          </v-flex>
+        </v-layout>
+      </v-overlay>
     </v-form>
   </div>
 </template>
@@ -43,6 +54,7 @@ export default {
       email: '',
       isFormValid: true,
       error: '',
+      loadingScreen: false,
     };
   },
 
@@ -54,14 +66,16 @@ export default {
         this.isFormValid = false;
         return;
       }
-      console.log(this.username);
+      this.loadingScreen = true;
       try {
         await this.$store.dispatch('resetPasswordRequest', {
           username: this.username,
           email: this.email,
         });
+        this.loadingScreen = false;
         this.$emit('backToLogin');
       } catch (err) {
+        this.loadingScreen = false;
         this.error = err.response.data.message || 'Failed to request reset.';
       }
     },

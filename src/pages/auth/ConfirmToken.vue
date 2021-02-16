@@ -1,16 +1,23 @@
 <template>
-  <p v-if="signupCorrectToken">
-    Authenticated Successfully! Redirecting you to Login page.
-    <router-link to="/login"> here if not redirected. </router-link>
-  </p>
-  <p v-else-if="signupInorrectToken || error || forgotPasswordIncorrectToken">
-    Incorrect Token Provided {{ error }}
-  </p>
   <PasswordChangeForm
     :username="username"
     :token="token"
-    v-else-if="forgotPasswordCorrectToken"
+    v-if="forgotPasswordCorrectToken"
   />
+  <v-row align="center" justify="center" v-else>
+    <v-col class="text-center" cols="12">
+      <h1 class="display-1 font-weight-thin mb-4" v-if="signupCorrectToken">
+        Redirecting you to Login page.
+        <router-link to="/login"> click here if not redirected. </router-link>
+      </h1>
+      <h1
+        class="display-1 font-weight-thin mb-4"
+        v-if="signupInorrectToken || error || forgotPasswordIncorrectToken"
+      >
+        Incorrect Token Provided {{ error }}
+      </h1>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

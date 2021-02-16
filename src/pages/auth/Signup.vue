@@ -91,12 +91,22 @@
           </v-col>
         </v-row>
       </v-card-actions>
+
+      <v-overlay v-if="loadingScreen">
+        <v-layout justify-center align-center>
+          <v-flex justify-center xs10 class="mx-auto">
+            <v-progress-circular
+              :size="50"
+              color="primary"
+              indeterminate
+            ></v-progress-circular>
+          </v-flex>
+        </v-layout>
+      </v-overlay>
     </v-form>
-    <v-row align="center" justify="center">
-      <v-col cols="12" md="2">
-        <v-btn @click="loginInstead"> Have an Account? Login Instead </v-btn>
-      </v-col>
-    </v-row>
+    <v-layout justify-center>
+      <v-btn @click="loginInstead"> Have an Account? Login Instead </v-btn>
+    </v-layout>
   </div>
 </template>
 
@@ -112,10 +122,7 @@ export default {
         (v) => v.length >= 6 || 'Firstname must be greater than 6 characters',
       ],
       lastName: '',
-      lastNameRules: [
-        (v) => !!v || 'Last Name is required',
-        (v) => v.length >= 6 || 'Last Name must be greater than 6 characters',
-      ],
+      lastNameRules: [(v) => !!v || 'Last Name is required'],
       username: '',
       usernameRules: [
         (v) => !!v || 'Username is required',
@@ -139,6 +146,7 @@ export default {
           v.length <= 6 || 'Confirm password must be greater than 6 characters',
       ],
       error: '',
+      loadingScreen: false,
     };
   },
 
@@ -147,6 +155,7 @@ export default {
       this.$router.replace('/login');
     },
     async subgmitSignup() {
+      this.loadingScreen = true;
       try {
         await this.$store.dispatch('signup', {
           firstName: this.firstName,
@@ -156,8 +165,10 @@ export default {
           dateOfBirth: this.dateOfBirth,
           password: this.password,
         });
+        this.loadingScreen = false;
         this.$router.replace('/login');
       } catch (err) {
+        this.loadingScreen = false;
         this.error =
           err.response.data.message || 'Failed to create new account';
       }

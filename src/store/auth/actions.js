@@ -16,7 +16,7 @@ export default {
       const expirationTime = new Date().getTime() + +response.data.expiryTime;
 
       localStorage.setItem(SESSION_ATTRIBUTE_USER_NAME, response.data.username);
-      localStorage.setItem(SESSION_ATTRIBUTE_JWT, response.data.username);
+      localStorage.setItem(SESSION_ATTRIBUTE_JWT, response.data.jwt);
       localStorage.setItem(SESSION_ATTRIBUTE_ROLES, response.data.roles);
       localStorage.setItem(SESSION_ATTRIBUTE_EXPIRY_TIME, expirationTime);
 

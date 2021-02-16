@@ -6,6 +6,9 @@ import WelcomeComponent from "./pages/Welcome";
 import ConfirmToken from "./pages/auth/ConfirmToken"
 import NotFound from "./components/NotFound";
 import store from "./store/index"
+import UserProfile from "./pages/profile/UserProfile"
+import AdminUserManagement from "./pages/profile/AdminUserManagement"
+import UserDetail from "./pages/profile/UserDetail"
 vue.use(Router);
 const router = new Router({
   routes: [
@@ -26,6 +29,25 @@ const router = new Router({
       name: "signup",
     },
     {
+      path:"/profile",
+      name:"profile",
+      component: UserProfile,
+      meta: {requiresAuth: true},
+    },
+    {
+      path:"/user-management",
+      name:"userManagement",
+      component: AdminUserManagement,
+      meta: {requiresAuth: true, isAdmin: true},
+    },
+    {
+      path:"/user-management/:username",
+      name:"userdetail",
+      component: UserDetail,
+      meta: {requiresAuth: true, isAdmin: true},
+      props: true
+    },
+    {
       path: "/confirm-token/:authType/:token",
       component: ConfirmToken,
       name: "confirmToken",
@@ -40,7 +62,6 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(store.getters.isAuthenticated);
   console.log(to, from);
   if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
     next("/login"); //to redirect to auth if not authenticated.
@@ -49,7 +70,10 @@ router.beforeEach((to, from, next) => {
     store.getters.isAuthenticated
   ) {
     next({ name: "home" });
-  } else {
+  } else if(to.meta.requiresAuth && (to.meta.isAdmin && !store.getters.isAdmin)){
+    next({name: "home"})
+  }
+  else {
     next();
   }
 });
