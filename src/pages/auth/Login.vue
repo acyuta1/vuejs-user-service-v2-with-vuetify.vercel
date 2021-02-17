@@ -11,7 +11,7 @@
           <v-text-field
             v-model="username"
             :rules="usernameRules"
-            :counter="10"
+            :counter="36"
             label="Username"
             required
           ></v-text-field>
@@ -23,7 +23,7 @@
             type="password"
             v-model="password"
             :rules="passwordRules"
-            :counter="10"
+            :counter="36"
             label="Password"
             required
           ></v-text-field>
