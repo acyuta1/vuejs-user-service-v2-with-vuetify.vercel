@@ -54,7 +54,6 @@ export default {
   data() {
     return {
       user: {
-        username: '',
         firstName: '',
         lastName: '',
         email: '',
@@ -67,7 +66,6 @@ export default {
   async created() {
     await UserService.getAUser(this.username)
       .then((res) => {
-        this.user.username = res.data.username;
         this.user.firstName = res.data.firstName;
         this.user.lastName = res.data.lastName;
         this.user.email = res.data.email;
@@ -120,9 +118,7 @@ export default {
     },
 
     loginUser() {
-      console.log(this.user.username);
-      console.log(this.$store.getters.getUsername);
-      return this.user.username === this.$store.getters.getUsername;
+      return this.username === this.$store.getters.getUsername;
     },
 
     backToManagement() {
